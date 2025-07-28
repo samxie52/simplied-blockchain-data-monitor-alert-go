@@ -554,8 +554,12 @@ simplified-blockchain-data-monitor-alert-go/
 ## 🔧 开发工作流程图
 
 ```mermaid
-gitgraph
+gitgraph:
+    options:
+        mainBranchName: main
+        theme: base
     commit id: "项目初始化"
+    
     branch feature/config
     checkout feature/config
     commit id: "配置管理"
@@ -618,51 +622,53 @@ gitgraph
 ```mermaid
 gantt
     title 区块链监控系统开发计划
-    dateFormat  YYYY-MM-DD
+    dateFormat YYYY-MM-DD
+    axisFormat %m/%d
+    
     section 基础架构
-    项目初始化           :done, init
-    配置管理系统         :done, config
-    日志监控基础         :done, logging
+    项目初始化           :done, init, 2024-01-01, 2024-01-03
+    配置管理系统         :done, config, after init, 3d
+    日志监控基础         :done, logging, after config, 2d
     
     section 以太坊集成
-    数据模型设计         :active, models
-    以太坊客户端         :client
-    WebSocket管理        :websocket
-    数据访问层           :repo
+    数据模型设计         :active, models, after logging, 3d
+    以太坊客户端         :client, after models, 4d
+    WebSocket管理        :websocket, after client, 3d
+    数据访问层           :repo, after websocket, 2d
     
     section 核心监控
-    监控服务             :monitor
-    时序数据存储         :timeseries
-    Gas价格追踪          :gas
-    大额交易监控         :transaction
+    监控服务             :monitor, after repo, 4d
+    时序数据存储         :timeseries, after monitor, 3d
+    Gas价格追踪          :gas, after timeseries, 2d
+    大额交易监控         :transaction, after gas, 3d
     
     section 智能告警
-    告警引擎             :alert-engine
-    告警规则             :alert-rules
-    通知服务             :notification
-    Telegram集成         :telegram
+    告警引擎             :alert-engine, after transaction, 4d
+    告警规则             :alert-rules, after alert-engine, 3d
+    通知服务             :notification, after alert-rules, 2d
+    Telegram集成         :telegram, after notification, 2d
     
     section 预测分析
-    预测算法             :prediction
-    趋势分析             :trend
+    预测算法             :prediction, after telegram, 5d
+    趋势分析             :trend, after prediction, 3d
     
     section Web接口
-    API接口              :api
-    WebSocket推送        :ws-hub
-    仪表板界面           :dashboard
-    用户管理             :user-mgmt
+    API接口              :api, after trend, 4d
+    WebSocket推送        :ws-hub, after api, 2d
+    仪表板界面           :dashboard, after ws-hub, 5d
+    用户管理             :user-mgmt, after dashboard, 3d
     
     section 部署优化
-    性能优化             :perf
-    容器化部署           :docker
-    监控完善             :monitoring
-    CI/CD流水线          :cicd
+    性能优化             :perf, after user-mgmt, 3d
+    容器化部署           :docker, after perf, 2d
+    监控完善             :monitoring, after docker, 2d
+    CI/CD流水线          :cicd, after monitoring, 3d
     
     section 测试文档
-    单元测试             :unit-test
-    集成测试             :integration
-    项目文档             :docs
-    代码优化             :refactor
+    单元测试             :unit-test, after cicd, 4d
+    集成测试             :integration, after unit-test, 3d
+    项目文档             :docs, after integration, 2d
+    代码优化             :refactor, after docs, 2d
 ```
 
 ## 📈 最佳编程实践 - 开发路线图
