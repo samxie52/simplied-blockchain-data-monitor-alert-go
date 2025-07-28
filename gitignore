@@ -1,33 +1,31 @@
-# 二进制文件
+
+# Binaries for programs and plugins
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
 
-# 测试二进制文件
+# Test binary, built with `go test -c`
 *.test
 
-# 输出目录
-/bin/
-/dist/
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
 
-# 依赖目录
-/vendor/
-
-/docs/mock-creation-guide.md
+# Dependency directories (remove the comment below to include it)
+vendor/
 
 # Go workspace file
 go.work
 
-# IDE
+# IDE files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# 操作系统
+# OS generated files
 .DS_Store
 .DS_Store?
 ._*
@@ -36,12 +34,68 @@ go.work
 ehthumbs.db
 Thumbs.db
 
-# 日志文件
-/logs/
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Logs
+logs/
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# 配置文件（敏感信息）
-configs/config.local.yaml
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
 
-# 临时文件
-/tmp/
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Build outputs
+build/
+dist/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+tmp/
+temp/
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Kubernetes
+*.kubeconfig
+
+# Certificates
+*.pem
+*.key
+*.crt
+*.csr
+
+# Local configuration
+config.local.yaml
+config.local.json
+
+# Backup files
+*.backup
+*.bak
+
+# Cache
+.cache/
+
+# Node modules (if any frontend dependencies)
+node_modules/
+
+# Go module cache
+go.sum
