@@ -554,10 +554,7 @@ simplified-blockchain-data-monitor-alert-go/
 ## 🔧 开发工作流程图
 
 ```mermaid
-gitgraph:
-    options:
-        mainBranchName: main
-        theme: base
+gitgraph
     commit id: "项目初始化"
     
     branch feature/config
