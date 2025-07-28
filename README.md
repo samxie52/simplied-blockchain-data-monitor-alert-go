@@ -554,64 +554,57 @@ simplified-blockchain-data-monitor-alert-go/
 ## 🔧 开发工作流程图
 
 ```mermaid
-gitgraph
-    commit id: "项目初始化"
+flowchart TD
+    A["🚀 项目初始化"] --> B["⚙️ 配置管理"]
+    B --> C["📈 日志监控"]
+    C --> D["📊 数据模型"]
+    D --> E["⚡ 以太坊集成"]
+    E --> F["🔌 WebSocket连接"]
+    F --> G["🔍 数据监控"]
+    G --> H["📉 时序存储"]
+    H --> I["⛽ Gas追踪"]
+    I --> J["🚨 告警引擎"]
+    J --> K["📜 规则系统"]
+    K --> L["📢 Telegram集成"]
+    L --> M["🤖 预测算法"]
+    M --> N["📈 趋势分析"]
+    N --> O["🌐 REST API"]
+    O --> P["🔄 WebSocket Hub"]
+    P --> Q["🖥️ Web界面"]
+    Q --> R["📦 Docker化"]
+    R --> S["🔄 CI/CD"]
+    S --> T["📊 监控完善"]
+    T --> U["🎆 v1.0.0 Release"]
     
-    branch feature/config
-    checkout feature/config
-    commit id: "配置管理"
-    commit id: "日志监控"
-    checkout main
-    merge feature/config
+    %% 分支标识
+    B -.-> |feature/config| C
+    D -.-> |feature/ethereum| F
+    G -.-> |feature/monitoring| I
+    J -.-> |feature/alerts| L
+    M -.-> |feature/prediction| N
+    O -.-> |feature/api| Q
+    R -.-> |feature/deployment| T
     
-    branch feature/ethereum
-    checkout feature/ethereum
-    commit id: "数据模型"
-    commit id: "以太坊集成"
-    commit id: "WebSocket连接"
-    checkout main
-    merge feature/ethereum
+    %% 样式定义
+    classDef startNode fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef configNode fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef ethNode fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef monitorNode fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef alertNode fill:#ffebee,stroke:#b71c1c,stroke-width:2px
+    classDef predNode fill:#f1f8e9,stroke:#33691e,stroke-width:2px
+    classDef apiNode fill:#e3f2fd,stroke:#0d47a1,stroke-width:2px
+    classDef deployNode fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef releaseNode fill:#fff8e1,stroke:#ff6f00,stroke-width:3px
     
-    branch feature/monitoring
-    checkout feature/monitoring
-    commit id: "数据监控"
-    commit id: "时序存储"
-    commit id: "Gas追踪"
-    checkout main
-    merge feature/monitoring
-    
-    branch feature/alerts
-    checkout feature/alerts
-    commit id: "告警引擎"
-    commit id: "规则系统"
-    commit id: "Telegram集成"
-    checkout main
-    merge feature/alerts
-    
-    branch feature/prediction
-    checkout feature/prediction
-    commit id: "预测算法"
-    commit id: "趋势分析"
-    checkout main
-    merge feature/prediction
-    
-    branch feature/api
-    checkout feature/api
-    commit id: "REST API"
-    commit id: "WebSocket Hub"
-    commit id: "Web界面"
-    checkout main
-    merge feature/api
-    
-    branch feature/deployment
-    checkout feature/deployment
-    commit id: "Docker化"
-    commit id: "CI/CD"
-    commit id: "监控完善"
-    checkout main
-    merge feature/deployment
-    
-    commit id: "v1.0.0 Release"
+    class A startNode
+    class B,C configNode
+    class D,E,F ethNode
+    class G,H,I monitorNode
+    class J,K,L alertNode
+    class M,N predNode
+    class O,P,Q apiNode
+    class R,S,T deployNode
+    class U releaseNode
 ```
 
 ## 📋 项目开发时间线
