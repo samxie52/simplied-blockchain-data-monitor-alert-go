@@ -1,32 +1,74 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	"log"
 	"os"
+
+	"simplied-blockchain-data-monitor-alert-go/internal/config"
+	"simplied-blockchain-data-monitor-alert-go/pkg/database"
+	"simplied-blockchain-data-monitor-alert-go/pkg/logger"
 )
 
 func main() {
-	fmt.Println("Blockchain Monitor Worker - Step 1.1 Implementation")
-	fmt.Println("Version: v0.1.0")
-	fmt.Println("Status: Project Structure Initialized")
+	var (
+		command        *string = flag.String("command", "up", "Migration command: up, version")
+		migrationsPath *string = flag.String("path", "./migrations", "Path to migrations directory")
+		// flag.String() 返回一个指向字符串的指针
+		configPath *string = flag.String("config", ".env", "Path to configuration file")
+	)
+	// flag.Parse() 解析命令行参数
+	flag.Parse()
 
-	// 检查命令行参数
-	if len(os.Args) < 2 {
-		log.Println("Usage: migrator [up|down|reset]")
+	// 加载配置
+	cfg := config.Config{}
+	if err := config.NewEnvLoader(*configPath).Load(&cfg); err != nil {
+		fmt.Printf("Failed to load config: %v\n", err)
 		os.Exit(1)
 	}
 
-	command := os.Args[1]
-	switch command {
-	case "up":
-		log.Println("Migration up placeholder - to be implemented in database setup step")
-	case "down":
-		log.Println("Migration down placeholder - to be implemented in database setup step")
-	case "reset":
-		log.Println("Migration reset placeholder - to be implemented in database setup step")
-	default:
-		log.Printf("Unknown command: %s", command)
+	// 创建日志记录器
+	loggerConfig := logger.Config{
+		Level:     "info",
+		Format:    "text",
+		Output:    "stdout",
+		Component: "migrator",
+	}
+	log, err := logger.New(loggerConfig)
+	if err != nil {
+		fmt.Printf("Failed to create logger: %v\n", err)
 		os.Exit(1)
+	}
+
+	// 创建数据库连接
+	pgManager, err := database.NewPostgresManager(cfg.Database, log)
+	if err != nil {
+		log.WithError(err).Fatal("Failed to create PostgreSQL manager")
+	}
+	defer pgManager.Close()
+
+	// 创建迁移器
+	migrator, err := database.NewMigrator(pgManager.GetDB().DB, *migrationsPath, log)
+	if err != nil {
+		log.WithError(err).Fatal("Failed to create migrator")
+	}
+
+	// 执行迁移命令
+	switch *command {
+	case "up":
+		if err := migrator.Up(); err != nil {
+			log.WithError(err).Fatal("Migration up failed")
+		}
+		log.Info("Migration up completed")
+
+	case "version":
+		v, dirty, err := migrator.Version()
+		if err != nil {
+			log.WithError(err).Fatal("Failed to get migration version")
+		}
+		fmt.Printf("Current version: %d, Dirty: %t\n", v, dirty)
+
+	default:
+		log.Fatal("Unknown command: " + *command)
 	}
 }
