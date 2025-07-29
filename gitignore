@@ -99,3 +99,5 @@ node_modules/
 
 # Go module cache
 go.sum
+
+docs/
