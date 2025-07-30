@@ -12,8 +12,9 @@ import (
 
 func main() {
 	var (
-		command        *string = flag.String("command", "up", "Migration command: up, version")
+		command        *string = flag.String("command", "up", "Migration command: up, down, version, force")
 		migrationsPath *string = flag.String("path", "./migrations", "Path to migrations directory")
+		forceVersion   *int    = flag.Int("force-version", 0, "Version to force (used with force command)")
 		// flag.String() 返回一个指向字符串的指针
 		configPath *string = flag.String("config", ".env", "Path to configuration file")
 	)
@@ -67,6 +68,15 @@ func main() {
 			log.WithError(err).Fatal("Failed to get migration version")
 		}
 		fmt.Printf("Current version: %d, Dirty: %t\n", v, dirty)
+
+	case "force":
+		if *forceVersion < 0 {
+			log.Fatal("Force version must be >= 0")
+		}
+		if err := migrator.Force(*forceVersion); err != nil {
+			log.WithError(err).Fatal("Failed to force migration version")
+		}
+		log.Info("Migration version forced successfully")
 
 	default:
 		log.Fatal("Unknown command: " + *command)

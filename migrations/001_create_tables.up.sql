@@ -329,7 +329,7 @@ SELECT
     COUNT(ar.id) AS alert_rules_count,
     COUNT(s.id) AS subscriptions_count,
     COUNT(CASE WHEN ar.status = 'active' THEN 1 END) AS active_alert_rules,
-    COUNT(CASE WHEN s.is_active = true THEN 1 END) AS active_subscriptions
+    COUNT(CASE WHEN s.status = 'active' THEN 1 END) AS active_subscriptions
 FROM users u
 LEFT JOIN alert_rules ar ON u.id = ar.user_id
 LEFT JOIN subscriptions s ON u.id = s.user_id

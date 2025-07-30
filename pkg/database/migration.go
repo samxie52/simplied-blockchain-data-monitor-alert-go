@@ -7,6 +7,7 @@ import (
 
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file" // 导入file源驱动
 	"github.com/sirupsen/logrus"
 
 	"simplied-blockchain-data-monitor-alert-go/pkg/logger"
@@ -77,4 +78,18 @@ func (m *Migrator) Version() (uint, bool, error) {
 	}).Info("Current migration version")
 
 	return version, dirty, nil
+}
+
+// Force 强制设置迁移版本（用于修复脏状态）
+func (m *Migrator) Force(version int) error {
+	m.logger.WithField("version", version).Info("Forcing migration version")
+
+	err := m.migrate.Force(version)
+	if err != nil {
+		m.logger.WithError(err).Error("Failed to force migration version")
+		return fmt.Errorf("failed to force migration version: %w", err)
+	}
+
+	m.logger.Info("Migration version forced successfully")
+	return nil
 }
